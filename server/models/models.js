@@ -64,7 +64,7 @@ Product.belongsTo(Brand)
 Manufactiurer.hasMany(Product)
 Product.belongsTo(Manufactiurer)
 
-Product.hasMany(ProductInfo)
+Product.hasMany(ProductInfo, {as:'info'})
 ProductInfo.belongsTo(Product)
 
 Manufactiurer.belongsToMany(Brand, {through: BrandManufactiurer})

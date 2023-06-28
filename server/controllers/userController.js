@@ -1,4 +1,4 @@
-const ApiError = require('../erorr/ApiError')
+const ApiError = require('../error/ApiError')
 class UserController {
     async registration (req, res) {
         
