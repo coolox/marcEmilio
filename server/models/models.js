@@ -35,21 +35,21 @@ const ProductInfo = sequelize.define('product_info', {
     pcs: {type: DataTypes.INTEGER}
 })
 
-const Manufactiurer = sequelize.define('manufactiurer', {
+const Manufacturer = sequelize.define('manufacturer', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING}
+    name: {type: DataTypes.STRING, unique: true}
 })
 
 const Brand = sequelize.define('brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING}
+    name: {type: DataTypes.STRING, unique: true}
 })
 
-const BrandManufactiurer = sequelize.define('brand_manufactiurer', {
+const BrandManufacturer = sequelize.define('brand_manufacturer', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-User.hasOne(UserInfo)
+User.hasOne(UserInfo, {as:'info'})
 UserInfo.belongsTo(User)
 
 UserInfo.hasOne(ProductList)
@@ -61,15 +61,15 @@ Product.belongsTo(ProductList)
 Brand.hasMany(Product)
 Product.belongsTo(Brand)
 
-Manufactiurer.hasMany(Product)
-Product.belongsTo(Manufactiurer)
+Manufacturer.hasMany(Product)
+Product.belongsTo(Manufacturer)
 
 Product.hasMany(ProductInfo, {as:'info'})
 ProductInfo.belongsTo(Product)
 
-Manufactiurer.belongsToMany(Brand, {through: BrandManufactiurer})
-Brand.belongsToMany(Manufactiurer, {through: BrandManufactiurer})
-
+/* Manufacturer.belongsToMany(Brand, {through: BrandManufacturer})
+Brand.belongsToMany(Manufacturer, {through: BrandManufacturer})
+ */
 module.exports = {
-    User, UserInfo, Product, ProductInfo, ProductList, Brand, Manufactiurer, BrandManufactiurer
+    User, UserInfo, Product, ProductInfo, ProductList, Brand, Manufacturer, BrandManufacturer
 }

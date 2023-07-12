@@ -6,11 +6,11 @@ const ApiError = require('../error/ApiError')
 class ProductController {
     async create (req, res, next) {
         try {
-            let {name, price, brandId, manufactiurerId, info} = req.body
+            let {name, price, brandId, manufacturerId, info} = req.body
             const {img} = req.files
             let fileName = uuid.v4() + '.jpg'
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
-            const product = await Product.create({name, price, brandId, manufactiurerId, img: fileName})
+            const product = await Product.create({name, price, brandId, manufacturerId, img: fileName})
             
             if(info){
                 info = JSON.parse(info)
@@ -22,7 +22,7 @@ class ProductController {
                     }))
             }
 
-        return res.json(product)
+            return res.json(product)
         
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -30,25 +30,22 @@ class ProductController {
         
     }
     async getAll (req, res) {
-        let {brandId, manufactiurerId, limit, page} = req.query
+        let {brandId, manufacturerId, limit, page} = req.query
         page = page || 1
         limit = limit || 9
         let offset = page * limit - limit
         let products
-        if(!brandId && !manufactiurerId){
+        if(!brandId && !manufacturerId){
             products = await Product.findAndCountAll({limit, offset})
         }
-        if(brandId && !manufactiurerId){
+        if(brandId && !manufacturerId){
             products = await Product.findAndCountAll({where:{brandId}, limit, offset})
-            
         }
-        if(!brandId && manufactiurerId){
-            products = await Product.findAndCountAll({where:{manufactiurerId}, limit, offset})
-            
+        if(!brandId && manufacturerId){
+            products = await Product.findAndCountAll({where:{manufacturerId}, limit, offset})  
         }
-        if(brandId && manufactiurerId){
-            products = await Product.findAndCountAll({where:{brandId, manufactiurerId}, limit, offset})
-
+        if(brandId && manufacturerId){
+            products = await Product.findAndCountAll({where:{brandId, manufacturerId}, limit, offset})
         }
         return res.json(products)
     }

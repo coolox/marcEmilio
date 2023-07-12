@@ -3,11 +3,11 @@ const router = new Router()
 const productRouter =require('./productRouter')
 const userRouter =require('./userRouter')
 const brandRouter =require('./brandRouter')
-const manufactiurerRouter =require('./manufactiurerRouter')
+const manufacturerRouter =require('./manufacturerRouter')
 
 router.use('/user',userRouter)
 router.use('/brand',brandRouter)
-router.use('/manufactiurer',manufactiurerRouter)
+router.use('/manufacturer',manufacturerRouter)
 router.use('/product',productRouter)
 
 module.exports = router
